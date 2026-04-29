@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-ink: #0A0A0A;
+  --color-paper: #F5F5F0;
+  --color-silver: #8E9299;
+  --color-emerald-digital: #10B981;
+
+  /* Darkroom Theme - Optimized for total darkness */
+  --color-dark-ink: #808080;
+  --color-dark-paper: #000000;
+  --color-dark-silver: #505050;
+  --color-dark-border: #1A1A1A;
+  --color-dark-emerald: #064e3b; /* Very dark emerald */
+}
+
+@layer base {
+  html, body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans selection:bg-emerald-digital selection:text-white;
+  }
+
+  .darkroom {
+    @apply bg-dark-paper text-dark-ink;
+  }
+}
+
+@layer utilities {
+  .grid-bg {
+    background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .darkroom.grid-bg {
+    background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+  }
+  
+  .slam-in {
+    animation: slamIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes slamIn {
+    0% { transform: scale(1.1); opacity: 0; filter: blur(10px); }
+    100% { transform: scale(1); opacity: 1; filter: blur(0); }
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-default::-webkit-scrollbar {
+    display: block;
+    width: 4px;
+  }
+  .scrollbar-default::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-default::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.1);
+    border-radius: 10px;
+  }
+  .scrollbar-default::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.2);
+  }
+}

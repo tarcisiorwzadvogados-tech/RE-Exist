@@ -1,0 +1,26 @@
+run = "npm run dev"
+entrypoint = "src/App.tsx"
+modules = ["nodejs-20"]
+
+[nix]
+channel = "stable-24_05"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[[ports]]
+localPort = 3001
+externalPort = 3001
+
+[[ports]]
+localPort = 3002
+externalPort = 3002
+
+[agent]
+expertMode = true
+
+[deployment]
+deploymentTarget = "cloudrun"
+build = ["sh", "-c", "npm run build"]
+run = ["sh", "-c", "npm run server"]
