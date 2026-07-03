@@ -1,6 +1,6 @@
 import { Key, ExternalLink, ChevronDown, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 
 interface Props {
   onSaveKey: (key: string) => void;
@@ -10,7 +10,7 @@ export function ApiKeyScreen({ onSaveKey }: Props) {
   const [key, setKey] = useState('');
   const [showGuide, setShowGuide] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const trimmed = key.trim();
     if (trimmed) onSaveKey(trimmed);

@@ -31,7 +31,16 @@
       "Bash(DEPLOY_BASE=/RE-Exist/ npm run build)",
       "Bash(git add *)",
       "Bash(git commit -m 'Scalability roadmap: hardening, analytics, share loop, Pages deploy *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(gh api *)",
+      "Bash(gh run *)",
+      "Bash(grep -iE \"\\\\.env$|secret|credential|key\\\\.|token\")",
+      "Bash(gh repo *)",
+      "Bash(git commit -m 'Sync package-lock with package.json *)",
+      "Bash(sed -i '' 's/ai.files.delete\\(uploadedFileName\\)/ai.files.delete\\({ name: uploadedFileName }\\)/' server.ts src/App.tsx)",
+      "Bash(sed -i '' \"s/import { useState } from 'react';/import { useState, type FormEvent } from 'react';/; s/e: React.FormEvent/e: FormEvent/\" src/components/ApiKeyScreen.tsx)",
+      "Bash(LOG_LEVEL=silent npm run ci)",
+      "Bash(git commit -m 'Fix typecheck: files.delete signature and FormEvent import *)"
     ]
   }
 }

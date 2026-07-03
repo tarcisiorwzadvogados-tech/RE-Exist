@@ -92,7 +92,7 @@ async function callGeminiDirect(
     },
   });
 
-  if (uploadedFileName) ai.files.delete(uploadedFileName).catch(() => {});
+  if (uploadedFileName) ai.files.delete({ name: uploadedFileName }).catch(() => {});
 
   for (const part of response.candidates?.[0]?.content?.parts ?? []) {
     if (part.inlineData?.data) return `data:image/png;base64,${part.inlineData.data}`;
