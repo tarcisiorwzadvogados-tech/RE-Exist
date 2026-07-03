@@ -1,14 +1,18 @@
 # RE-EXIST — Runbook de Implantação
 
-Arquitetura de produção: **frontend estático em CDN** + **proxy em container serverless**. Deploys independentes — o frontend nunca cai por causa do backend.
+Arquitetura de produção: **frontend estático em CDN** + **proxy em container serverless** (opcional). Deploys independentes — o frontend nunca cai por causa do backend.
 
-## 1. Frontend (Vercel ou Cloudflare Pages)
+## 1. Frontend
 
-```bash
-npm run build            # gera dist/
-```
+### ✅ Ativo: GitHub Pages (modo BYOK)
 
-- **Vercel**: importar o repo → framework "Vite" → build `npm run build`, output `dist`. Pronto.
+**Produção atual:** https://tarcisiorwzadvogados-tech.github.io/RE-Exist/
+
+Deploy automático a cada push na `main` via [deploy-pages.yml](.github/workflows/deploy-pages.yml) (build com `DEPLOY_BASE=/RE-Exist/`). Nesse modo cada usuário insere a própria chave Gemini (BYOK) — não há backend nem custo de servidor.
+
+### Alternativa: Vercel ou Cloudflare Pages (quando ativar o proxy)
+
+- **Vercel**: importar o repo → framework "Vite" → build `npm run build`, output `dist`.
 - **Cloudflare Pages**: mesmo esquema (build command `npm run build`, output `dist`).
 - Variáveis de build (opcionais): `POSTHOG_KEY`, `POSTHOG_HOST` (analytics), `GEMINI_API_KEY` **não** — nunca colocar a chave no build do frontend.
 - Configurar rewrite de `/api/*` para a URL do proxy (Vercel: `vercel.json` rewrites; Pages: `_redirects`).

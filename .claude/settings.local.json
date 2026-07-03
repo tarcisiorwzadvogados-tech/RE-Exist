@@ -40,7 +40,10 @@
       "Bash(sed -i '' 's/ai.files.delete\\(uploadedFileName\\)/ai.files.delete\\({ name: uploadedFileName }\\)/' server.ts src/App.tsx)",
       "Bash(sed -i '' \"s/import { useState } from 'react';/import { useState, type FormEvent } from 'react';/; s/e: React.FormEvent/e: FormEvent/\" src/components/ApiKeyScreen.tsx)",
       "Bash(LOG_LEVEL=silent npm run ci)",
-      "Bash(git commit -m 'Fix typecheck: files.delete signature and FormEvent import *)"
+      "Bash(git commit -m 'Fix typecheck: files.delete signature and FormEvent import *)",
+      "Bash(gh workflow *)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(d.get\\('html_url'\\), d.get\\('status'\\)\\)\")",
+      "Bash(git commit -m 'Docs: rewrite README, update .env.example and DEPLOYMENT for production state *)"
     ]
   }
 }
