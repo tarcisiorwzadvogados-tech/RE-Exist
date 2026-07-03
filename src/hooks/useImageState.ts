@@ -33,11 +33,22 @@ export const initialImageState: ImageState = {
 export function imageReducer(state: ImageState, action: ImageAction): ImageState {
   switch (action.type) {
     case 'LOAD_FILE':
-      return { ...state, rawImage: action.rawImage, originalFileName: action.fileName, isCropping: true, restoredImage: null };
+      return {
+        ...state,
+        rawImage: action.rawImage,
+        originalFileName: action.fileName,
+        isCropping: true,
+        restoredImage: null,
+      };
     case 'CLOSE_CROP':
       return { ...state, isCropping: false };
     case 'CONFIRM_CROP':
-      return { ...state, originalImage: action.croppedImage, detectedAspectRatio: action.aspectRatio, isCropping: false };
+      return {
+        ...state,
+        originalImage: action.croppedImage,
+        detectedAspectRatio: action.aspectRatio,
+        isCropping: false,
+      };
     case 'REOPEN_CROP':
       return { ...state, rawImage: state.originalImage, isCropping: true };
     case 'SET_RESTORED_IMAGE':

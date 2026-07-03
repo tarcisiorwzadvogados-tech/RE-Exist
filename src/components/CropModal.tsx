@@ -25,7 +25,11 @@ export function CropModal({ rawImage, onConfirm, onError, onClose, theme }: Prop
     setCroppedAreaPixels(pixels);
   }, []);
 
-  const getCroppedImg = async (imageSrc: string, pixelCrop: Area, rot: number): Promise<string | null> => {
+  const getCroppedImg = async (
+    imageSrc: string,
+    pixelCrop: Area,
+    rot: number
+  ): Promise<string | null> => {
     const image = await createImage(imageSrc);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -71,18 +75,29 @@ export function CropModal({ rawImage, onConfirm, onError, onClose, theme }: Prop
         <div className="p-6 md:p-8 border-b border-ink/5 flex items-center justify-between">
           <div>
             <h2 className="text-xl md:text-2xl font-serif italic text-ink">Define o Foco</h2>
-            <p className="text-[9px] md:text-[10px] font-mono uppercase tracking-widest text-silver mt-1">Ajuste o enquadramento da memória</p>
+            <p className="text-[9px] md:text-[10px] font-mono uppercase tracking-widest text-silver mt-1">
+              Ajuste o enquadramento da memória
+            </p>
           </div>
           <div className="flex items-center gap-2 md:gap-4">
             <div className="flex bg-ink/5 p-1 rounded-xl">
-              <button onClick={() => setRotation(r => r - 90)} className="p-2 hover:bg-white rounded-lg transition-all text-silver hover:text-ink">
+              <button
+                onClick={() => setRotation((r) => r - 90)}
+                className="p-2 hover:bg-white rounded-lg transition-all text-silver hover:text-ink"
+              >
                 <RotateCcw className="w-3 md:w-4 h-3 md:h-4" />
               </button>
-              <button onClick={() => setRotation(r => r + 90)} className="p-2 hover:bg-white rounded-lg transition-all text-silver hover:text-ink">
+              <button
+                onClick={() => setRotation((r) => r + 90)}
+                className="p-2 hover:bg-white rounded-lg transition-all text-silver hover:text-ink"
+              >
                 <RotateCw className="w-3 md:w-4 h-3 md:h-4" />
               </button>
             </div>
-            <button onClick={onClose} className="p-2 text-silver hover:text-red-500 transition-colors">
+            <button
+              onClick={onClose}
+              className="p-2 text-silver hover:text-red-500 transition-colors"
+            >
               <X className="w-5 md:w-6 h-5 md:h-6" />
             </button>
           </div>
@@ -105,14 +120,18 @@ export function CropModal({ rawImage, onConfirm, onError, onClose, theme }: Prop
         <div className="p-6 md:p-8 bg-white border-t border-ink/5 space-y-6 md:space-y-8 overflow-y-auto">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-3">
-              <label className="text-[10px] font-mono uppercase tracking-widest text-silver">Aspect Ratio</label>
+              <label className="text-[10px] font-mono uppercase tracking-widest text-silver">
+                Aspect Ratio
+              </label>
               <div className="flex flex-wrap gap-2">
                 {ASPECT_RATIOS.map((ratio) => (
                   <button
                     key={ratio.label}
                     onClick={() => setAspect(ratio.value)}
                     className={`px-3 py-1.5 md:px-4 md:py-2 rounded-full text-[9px] md:text-[10px] font-mono uppercase tracking-widest transition-all ${
-                      aspect === ratio.value ? 'bg-ink text-white' : 'bg-paper text-silver hover:bg-ink/5'
+                      aspect === ratio.value
+                        ? 'bg-ink text-white'
+                        : 'bg-paper text-silver hover:bg-ink/5'
                     }`}
                   >
                     {ratio.label}
@@ -123,7 +142,9 @@ export function CropModal({ rawImage, onConfirm, onError, onClose, theme }: Prop
 
             <div className="space-y-3 w-full md:min-w-[200px] md:w-auto">
               <div className="flex justify-between">
-                <label className="text-[10px] font-mono uppercase tracking-widest text-silver">Zoom</label>
+                <label className="text-[10px] font-mono uppercase tracking-widest text-silver">
+                  Zoom
+                </label>
                 <span className="text-[10px] font-mono text-ink">{Math.round(zoom * 100)}%</span>
               </div>
               <input

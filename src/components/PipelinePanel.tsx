@@ -20,7 +20,10 @@ export function PipelinePanel({ theme, disabled, onRun }: Props) {
   const [open, setOpen] = useState(false);
 
   const addStep = (preset: (typeof RESTORATION_PRESETS)[number]) => {
-    setSteps((s) => [...s, { id: `${preset.id}-${Date.now()}`, label: preset.label, prompt: preset.prompt }]);
+    setSteps((s) => [
+      ...s,
+      { id: `${preset.id}-${Date.now()}`, label: preset.label, prompt: preset.prompt },
+    ]);
   };
 
   const removeStep = (id: string) => setSteps((s) => s.filter((step) => step.id !== id));
@@ -42,7 +45,9 @@ export function PipelinePanel({ theme, disabled, onRun }: Props) {
   }
 
   return (
-    <div className={`rounded-2xl border ${border} p-4 space-y-4 ${isDark ? 'bg-dark-paper' : 'bg-white'}`}>
+    <div
+      className={`rounded-2xl border ${border} p-4 space-y-4 ${isDark ? 'bg-dark-paper' : 'bg-white'}`}
+    >
       <div className="flex items-center justify-between">
         <span className={`text-[9px] font-mono uppercase tracking-widest ${text}`}>
           Restoration Pipeline
@@ -61,7 +66,9 @@ export function PipelinePanel({ theme, disabled, onRun }: Props) {
               className={`flex items-center gap-2 px-3 py-2 rounded-xl border ${border} text-[10px] font-mono`}
             >
               <GripVertical className="w-3 h-3 text-silver/40 flex-shrink-0" />
-              <span className={`w-4 text-center ${isDark ? 'text-white/40' : 'text-ink/30'}`}>{i + 1}</span>
+              <span className={`w-4 text-center ${isDark ? 'text-white/40' : 'text-ink/30'}`}>
+                {i + 1}
+              </span>
               <span className={`flex-1 ${isDark ? 'text-white' : 'text-ink'}`}>{step.label}</span>
               <button
                 onClick={() => removeStep(step.id)}
@@ -89,7 +96,10 @@ export function PipelinePanel({ theme, disabled, onRun }: Props) {
       </div>
 
       <button
-        onClick={() => { onRun(steps); setOpen(false); }}
+        onClick={() => {
+          onRun(steps);
+          setOpen(false);
+        }}
         disabled={steps.length === 0 || disabled}
         className="w-full py-2.5 rounded-xl bg-emerald-digital text-white text-[9px] font-mono uppercase tracking-widest disabled:opacity-40 disabled:cursor-not-allowed transition-colors hover:bg-emerald-700 flex items-center justify-center gap-2"
       >

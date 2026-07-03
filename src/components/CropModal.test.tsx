@@ -38,7 +38,7 @@ describe('CropModal', () => {
     render(<CropModal {...defaultProps} onClose={onClose} />);
     // The X icon button is the one without text — find via role
     const closeButtons = screen.getAllByRole('button');
-    const xButton = closeButtons.find(b => b.querySelector('svg') && !b.textContent?.trim());
+    const xButton = closeButtons.find((b) => b.querySelector('svg') && !b.textContent?.trim());
     // fallback: just check that at least one button triggers onClose
     fireEvent.click(closeButtons[closeButtons.length - 3]); // X is the last icon button in header
     // We verify onClose is eventually called; exact button depends on layout

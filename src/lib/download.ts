@@ -10,10 +10,18 @@ interface DownloadOptions {
   selectedResolution: string;
   prompt: string;
   onClose: () => void;
+  watermark?: boolean;
 }
 
 export const downloadImage = async ({
-  format, restoredImage, originalFileName, restorationHistory, selectedResolution, prompt, onClose,
+  format,
+  restoredImage,
+  originalFileName,
+  restorationHistory,
+  selectedResolution,
+  prompt,
+  onClose,
+  watermark,
 }: DownloadOptions): Promise<void> => {
   const img = await createImage(restoredImage);
   const canvas = document.createElement('canvas');
@@ -23,17 +31,39 @@ export const downloadImage = async ({
   if (!ctx) return;
   ctx.drawImage(img, 0, 0);
 
+  // Free-tier exports carry a discreet attribution mark (viral loop); BYOK exports are clean
+  if (watermark && format !== 'pdf') {
+    const fontSize = Math.max(12, Math.round(canvas.width * 0.014));
+    const pad = fontSize;
+    ctx.font = `${fontSize}px monospace`;
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    ctx.fillStyle = 'rgba(0,0,0,0.45)';
+    ctx.fillText('RE-EXIST · re-exist.app', canvas.width - pad + 1, canvas.height - pad + 1);
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.fillText('RE-EXIST · re-exist.app', canvas.width - pad, canvas.height - pad);
+  }
+
   const currentLog = restorationHistory[0];
   const fileName = `${originalFileName}_restored.${format}`;
 
   if (format === 'pdf') {
-    await generateCertificatePDF({ restoredImage, img, currentLog, originalFileName, selectedResolution, prompt });
+    await generateCertificatePDF({
+      restoredImage,
+      img,
+      currentLog,
+      originalFileName,
+      selectedResolution,
+      prompt,
+    });
     onClose();
     return;
   }
 
   const metadata = `RE-EXIST Restoration | ID: ${currentLog?.id || 'N/A'} | Model: ${currentLog?.model || 'Unknown'} | Res: ${currentLog?.resolution || selectedResolution} | Prompt: ${currentLog?.prompt || prompt}`;
-  let downloadUrl = restoredImage;
+  // PNG normally reuses the original data URL untouched; with a watermark it must
+  // come from the canvas where the mark was drawn
+  let downloadUrl = watermark ? canvas.toDataURL('image/png') : restoredImage;
 
   if (format === 'jpg') {
     const base64 = canvas.toDataURL('image/jpeg', 0.9);

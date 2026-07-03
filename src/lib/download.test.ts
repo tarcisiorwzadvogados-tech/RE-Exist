@@ -49,7 +49,8 @@ function setupDomMocks() {
     getImageData: vi.fn(() => ({ data: new Uint8ClampedArray(200 * 100 * 4) })),
   };
   const fakeCanvas = {
-    width: 200, height: 100,
+    width: 200,
+    height: 100,
     getContext: vi.fn(() => ctx),
     toDataURL: vi.fn(() => 'data:image/jpeg;base64,fakejpeg'),
   };

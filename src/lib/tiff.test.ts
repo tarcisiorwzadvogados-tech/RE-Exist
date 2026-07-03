@@ -30,12 +30,17 @@ function mockFileReader(result: ArrayBuffer) {
 }
 
 function mockCanvas(width: number, height: number, nullCtx = false) {
-  const ctx = nullCtx ? null : {
-    createImageData: vi.fn(() => ({ data: new Uint8ClampedArray(Math.max(width * height * 4, 1)) })),
-    putImageData: vi.fn(),
-  };
+  const ctx = nullCtx
+    ? null
+    : {
+        createImageData: vi.fn(() => ({
+          data: new Uint8ClampedArray(Math.max(width * height * 4, 1)),
+        })),
+        putImageData: vi.fn(),
+      };
   const canvas = {
-    width: 0, height: 0,
+    width: 0,
+    height: 0,
     getContext: vi.fn(() => ctx),
     toDataURL: vi.fn(() => 'data:image/png;base64,abc'),
   };
@@ -85,6 +90,8 @@ describe('decodeTiffFile', () => {
     vi.mocked(UTIF.toRGBA8).mockReturnValue(new Uint8Array(10 * 10 * 4));
     mockCanvas(10, 10, true);
 
-    await expect(decodeTiffFile(makeFile('test.tiff'))).rejects.toThrow('Canvas context unavailable');
+    await expect(decodeTiffFile(makeFile('test.tiff'))).rejects.toThrow(
+      'Canvas context unavailable'
+    );
   });
 });

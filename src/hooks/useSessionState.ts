@@ -51,7 +51,9 @@ export function useSessionState() {
         type: 'LOAD_HISTORY',
         history: parsed.map((item: any) => ({ ...item, timestamp: new Date(item.timestamp) })),
       });
-    } catch { /* corrupt history — start fresh */ }
+    } catch {
+      /* corrupt history — start fresh */
+    }
   }, []);
 
   useEffect(() => {

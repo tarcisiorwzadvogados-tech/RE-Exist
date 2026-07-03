@@ -21,14 +21,18 @@ describe('imageReducer', () => {
 
   it('LOAD_FILE clears previous restoredImage', () => {
     const withRestored = { ...initialImageState, restoredImage: 'data:image/png;base64,old' };
-    const state = imageReducer(withRestored, { type: 'LOAD_FILE', rawImage: 'new', fileName: 'file' });
+    const state = imageReducer(withRestored, {
+      type: 'LOAD_FILE',
+      rawImage: 'new',
+      fileName: 'file',
+    });
     expect(state.restoredImage).toBeNull();
   });
 
   it('CONFIRM_CROP sets originalImage and closes crop modal', () => {
     const state = imageReducer(
       { ...initialImageState, isCropping: true },
-      { type: 'CONFIRM_CROP', croppedImage: 'data:image/jpeg;base64,cropped', aspectRatio: '16:9' },
+      { type: 'CONFIRM_CROP', croppedImage: 'data:image/jpeg;base64,cropped', aspectRatio: '16:9' }
     );
     expect(state.originalImage).toBe('data:image/jpeg;base64,cropped');
     expect(state.detectedAspectRatio).toBe('16:9');
@@ -48,7 +52,10 @@ describe('imageReducer', () => {
   });
 
   it('SET_RESTORED_IMAGE sets restoredImage', () => {
-    const state = imageReducer(initialImageState, { type: 'SET_RESTORED_IMAGE', payload: 'data:image/png;base64,restored' });
+    const state = imageReducer(initialImageState, {
+      type: 'SET_RESTORED_IMAGE',
+      payload: 'data:image/png;base64,restored',
+    });
     expect(state.restoredImage).toBe('data:image/png;base64,restored');
   });
 
@@ -58,7 +65,10 @@ describe('imageReducer', () => {
   });
 
   it('STOP_RESTORING sets isRestoring to false', () => {
-    const state = imageReducer({ ...initialImageState, isRestoring: true }, { type: 'STOP_RESTORING' });
+    const state = imageReducer(
+      { ...initialImageState, isRestoring: true },
+      { type: 'STOP_RESTORING' }
+    );
     expect(state.isRestoring).toBe(false);
   });
 
@@ -113,7 +123,10 @@ describe('sessionReducer', () => {
   });
 
   it('SET_PROMPT updates prompt', () => {
-    const state = sessionReducer(initialSessionState, { type: 'SET_PROMPT', payload: 'new prompt' });
+    const state = sessionReducer(initialSessionState, {
+      type: 'SET_PROMPT',
+      payload: 'new prompt',
+    });
     expect(state.prompt).toBe('new prompt');
   });
 
@@ -161,13 +174,23 @@ describe('uiReducer', () => {
   });
 
   it('SET_MODEL updates selectedModel', () => {
-    const state = uiReducer(initialUIState, { type: 'SET_MODEL', payload: 'gemini-3.1-flash-image-preview' });
+    const state = uiReducer(initialUIState, {
+      type: 'SET_MODEL',
+      payload: 'gemini-3.1-flash-image-preview',
+    });
     expect(state.selectedModel).toBe('gemini-3.1-flash-image-preview');
   });
 
   it('SET_MODEL auto-downgrades 4K to 2K when switching to flash', () => {
-    const with4K = { ...initialUIState, selectedResolution: '4K', selectedModel: 'gemini-3-pro-image-preview' };
-    const state = uiReducer(with4K, { type: 'SET_MODEL', payload: 'gemini-3.1-flash-image-preview' });
+    const with4K = {
+      ...initialUIState,
+      selectedResolution: '4K',
+      selectedModel: 'gemini-3-pro-image-preview',
+    };
+    const state = uiReducer(with4K, {
+      type: 'SET_MODEL',
+      payload: 'gemini-3.1-flash-image-preview',
+    });
     expect(state.selectedResolution).toBe('2K');
   });
 

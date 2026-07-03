@@ -1,5 +1,8 @@
 export const escapeXml = (str: string) =>
-  str.replace(/[<>&'"]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' }[c] ?? c));
+  str.replace(
+    /[<>&'"]/g,
+    (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' })[c] ?? c
+  );
 
 export const getClosestAspectRatio = (width: number, height: number): string => {
   const ratio = width / height;
@@ -18,7 +21,10 @@ export const getClosestAspectRatio = (width: number, height: number): string => 
   let minDiff = Math.abs(ratio - closest.value);
   for (let i = 1; i < supported.length; i++) {
     const diff = Math.abs(ratio - supported[i].value);
-    if (diff < minDiff) { minDiff = diff; closest = supported[i]; }
+    if (diff < minDiff) {
+      minDiff = diff;
+      closest = supported[i];
+    }
   }
   return closest.name;
 };
@@ -31,8 +37,7 @@ export const rotateSize = (width: number, height: number, rotation: number) => {
   };
 };
 
-export const generateId = () =>
-  Math.random().toString(36).substr(2, 9).toUpperCase();
+export const generateId = () => Math.random().toString(36).substr(2, 9).toUpperCase();
 
 export const createImage = (url: string): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
@@ -42,3 +47,25 @@ export const createImage = (url: string): Promise<HTMLImageElement> =>
     image.setAttribute('crossOrigin', 'anonymous');
     image.src = url;
   });
+
+// Gemini caps output at 4K; inputs beyond ~4000px or ~4MB only add upload time
+// and server memory, never quality. Downscale + re-encode before sending.
+const COMPRESS_MAX_DIMENSION = 4000;
+const COMPRESS_SIZE_TRIGGER = 4 * 1024 * 1024;
+
+export const compressImageIfNeeded = async (dataUrl: string): Promise<string> => {
+  const rawSize = Math.floor((dataUrl.length - dataUrl.indexOf(',') - 1) * 0.75);
+  const img = await createImage(dataUrl);
+  const largestSide = Math.max(img.width, img.height);
+
+  if (rawSize <= COMPRESS_SIZE_TRIGGER && largestSide <= COMPRESS_MAX_DIMENSION) return dataUrl;
+
+  const scale = Math.min(1, COMPRESS_MAX_DIMENSION / largestSide);
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(img.width * scale);
+  canvas.height = Math.round(img.height * scale);
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return dataUrl;
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  return canvas.toDataURL('image/jpeg', 0.9);
+};

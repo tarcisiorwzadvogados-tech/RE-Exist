@@ -26,9 +26,12 @@ export function ApiKeyScreen({ onSaveKey }: Props) {
         <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <Key className="text-emerald-600 w-8 h-8" />
         </div>
-        <h1 className="text-2xl font-semibold text-stone-900 mb-2 text-center">Chave de API necessária</h1>
+        <h1 className="text-2xl font-semibold text-stone-900 mb-2 text-center">
+          Chave de API necessária
+        </h1>
         <p className="text-stone-600 mb-6 text-center text-sm">
-          Insere a tua chave de API do Google Gemini. É guardada apenas no teu browser e nunca é enviada para lado nenhum.
+          Insere a tua chave de API do Google Gemini. É guardada apenas no teu browser e nunca é
+          enviada para lado nenhum.
         </p>
         <form onSubmit={handleSubmit} className="space-y-3">
           <input
@@ -55,7 +58,11 @@ export function ApiKeyScreen({ onSaveKey }: Props) {
             onClick={() => setShowGuide((v) => !v)}
             className="flex items-center gap-1.5 text-sm text-stone-500 hover:text-emerald-600 transition-colors w-full text-left"
           >
-            {showGuide ? <ChevronDown className="w-4 h-4 shrink-0" /> : <ChevronRight className="w-4 h-4 shrink-0" />}
+            {showGuide ? (
+              <ChevronDown className="w-4 h-4 shrink-0" />
+            ) : (
+              <ChevronRight className="w-4 h-4 shrink-0" />
+            )}
             Como obter a minha chave?
           </button>
 
@@ -69,7 +76,9 @@ export function ApiKeyScreen({ onSaveKey }: Props) {
                 className="overflow-hidden mt-3 space-y-2.5 text-sm text-stone-600"
               >
                 <li className="flex gap-3">
-                  <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                  <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center justify-center shrink-0 mt-0.5">
+                    1
+                  </span>
                   <span>
                     Acede ao{' '}
                     <a
@@ -83,15 +92,23 @@ export function ApiKeyScreen({ onSaveKey }: Props) {
                   </span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                  <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center justify-center shrink-0 mt-0.5">
+                    2
+                  </span>
                   <span>Faz login com a tua conta Google</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center justify-center shrink-0 mt-0.5">3</span>
-                  <span>Clica em <strong className="text-stone-700">"Create API key"</strong></span>
+                  <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center justify-center shrink-0 mt-0.5">
+                    3
+                  </span>
+                  <span>
+                    Clica em <strong className="text-stone-700">"Create API key"</strong>
+                  </span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center justify-center shrink-0 mt-0.5">4</span>
+                  <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center justify-center shrink-0 mt-0.5">
+                    4
+                  </span>
                   <span>Copia a chave gerada e cola no campo acima</span>
                 </li>
               </motion.ol>

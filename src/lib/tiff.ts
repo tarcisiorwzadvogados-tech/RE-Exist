@@ -6,7 +6,10 @@ export const decodeTiffFile = (file: File): Promise<string> =>
         const UTIF = (await import('utif')).default;
         const buffer = event.target?.result as ArrayBuffer;
         const ifds = UTIF.decode(buffer);
-        if (ifds.length === 0) { reject(new Error('Invalid TIFF file.')); return; }
+        if (ifds.length === 0) {
+          reject(new Error('Invalid TIFF file.'));
+          return;
+        }
 
         const getDim = (obj: any, tag: number) => {
           const val = obj[tag] ?? obj[`t${tag}`] ?? obj[tag.toString()];
@@ -24,7 +27,12 @@ export const decodeTiffFile = (file: File): Promise<string> =>
         for (const candidate of ifds) {
           const w = candidate.width || getDim(candidate, 256) || getDim(candidate, 40962);
           const h = candidate.height || getDim(candidate, 257) || getDim(candidate, 40963);
-          if (w && h) { ifd = candidate; rawWidth = w; rawHeight = h; break; }
+          if (w && h) {
+            ifd = candidate;
+            rawWidth = w;
+            rawHeight = h;
+            break;
+          }
         }
 
         if (!rawWidth || !rawHeight) {
@@ -33,7 +41,9 @@ export const decodeTiffFile = (file: File): Promise<string> =>
             UTIF.decodeImage(buffer, ifd);
             rawWidth = ifd.width || getDim(ifd, 256) || getDim(ifd, 40962);
             rawHeight = ifd.height || getDim(ifd, 257) || getDim(ifd, 40963);
-          } catch { /* dimension check below will catch this */ }
+          } catch {
+            /* dimension check below will catch this */
+          }
         } else {
           UTIF.decodeImage(buffer, ifd);
           rawWidth = ifd.width || rawWidth;
@@ -53,7 +63,10 @@ export const decodeTiffFile = (file: File): Promise<string> =>
         canvas.width = width;
         canvas.height = height;
         const ctx = canvas.getContext('2d');
-        if (!ctx) { reject(new Error('Canvas context unavailable.')); return; }
+        if (!ctx) {
+          reject(new Error('Canvas context unavailable.'));
+          return;
+        }
 
         const imgData = ctx.createImageData(width, height);
         imgData.data.set(rgba);

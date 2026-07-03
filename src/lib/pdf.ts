@@ -10,7 +10,12 @@ interface CertificateOptions {
 }
 
 export const generateCertificatePDF = async ({
-  restoredImage, img, currentLog, originalFileName, selectedResolution, prompt,
+  restoredImage,
+  img,
+  currentLog,
+  originalFileName,
+  selectedResolution,
+  prompt,
 }: CertificateOptions) => {
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
@@ -39,8 +44,14 @@ export const generateCertificatePDF = async ({
   let imgW = img.width;
   let imgH = img.height;
   const ratio = imgW / imgH;
-  if (imgW > maxImgWidth) { imgW = maxImgWidth; imgH = imgW / ratio; }
-  if (imgH > maxImgHeight) { imgH = maxImgHeight; imgW = imgH * ratio; }
+  if (imgW > maxImgWidth) {
+    imgW = maxImgWidth;
+    imgH = imgW / ratio;
+  }
+  if (imgH > maxImgHeight) {
+    imgH = maxImgHeight;
+    imgW = imgH * ratio;
+  }
   doc.addImage(restoredImage, 'PNG', (pageWidth - imgW) / 2, 65, imgW, imgH);
 
   const specsY = 65 + imgH + 10;
@@ -73,7 +84,8 @@ export const generateCertificatePDF = async ({
   const splitPrompt = doc.splitTextToSize(restorationPrompt, contentWidth - 5);
   const promptHeight = splitPrompt.length * 3.5;
   doc.text(restorationPrompt, margin + innerPadding + 5, promptStartY, {
-    align: 'justify', maxWidth: contentWidth - 10,
+    align: 'justify',
+    maxWidth: contentWidth - 10,
   });
 
   doc.setDrawColor(200, 200, 200);
@@ -85,7 +97,8 @@ export const generateCertificatePDF = async ({
   doc.setTextColor(150, 150, 150);
   doc.text(
     'This document certifies that the image above has undergone a digital restoration process using generative neural networks.',
-    margin, pageHeight - 15,
+    margin,
+    pageHeight - 15
   );
   doc.text('RE-EXIST LABORATORY - MEMORY RESISTANCE PROTOCOL', margin, pageHeight - 10);
 
@@ -119,7 +132,10 @@ export const generateReceiptPDF = async (restorationHistory: RestorationLog[]) =
   y += 7;
 
   restorationHistory.forEach((item) => {
-    if (y > 270) { doc.addPage(); y = 20; }
+    if (y > 270) {
+      doc.addPage();
+      y = 20;
+    }
     doc.text(item.timestamp.toLocaleDateString(), 20, y);
     doc.text(item.fileName.substring(0, 20), 50, y);
     doc.text(item.model, 100, y);

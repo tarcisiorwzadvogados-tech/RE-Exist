@@ -19,7 +19,19 @@
       "Bash(awk 'NR>1 {printf \"%d\\\\n\", \"0x\" substr\\($2, index\\($2,\":\"\\)+1, 4\\)}')",
       "Bash(PORT=3002 npm run server)",
       "Bash(curl *)",
-      "Bash(node -e \"console.log\\(require\\('./node_modules/vite/package.json'\\).version\\)\")"
+      "Bash(node -e \"console.log\\(require\\('./node_modules/vite/package.json'\\).version\\)\")",
+      "Bash(mkdir -p /Users/tarcisiorodolphicarneiro/Library/CloudStorage/Dropbox/Aplicativos/ReplitExport-tarcisiorc/RE-Exist/.claude)",
+      "Bash(npm list *)",
+      "Bash(LOG_LEVEL=silent npm test)",
+      "Bash(LOG_LEVEL=silent npx vitest run server.test.ts)",
+      "Bash(gcloud auth *)",
+      "Bash(vercel whoami *)",
+      "Bash(wrangler whoami *)",
+      "Bash(gh auth *)",
+      "Bash(DEPLOY_BASE=/RE-Exist/ npm run build)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'Scalability roadmap: hardening, analytics, share loop, Pages deploy *)",
+      "Bash(git push *)"
     ]
   }
 }

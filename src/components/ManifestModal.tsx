@@ -39,8 +39,16 @@ export function ManifestModal({ onClose }: Props) {
           transition={{ delay: 0.6 }}
           className="space-y-6 text-white/80 font-serif text-xl md:text-2xl leading-relaxed italic"
         >
-          <p>"O tempo é um erosivo implacável. Ele desbota cores, rasga bordas e silencia olhares. Mas algumas imagens se recusam a partir. Elas não apenas sobreviveram; elas <span className="text-white font-bold not-italic">resistiram</span>."</p>
-          <p>"Através da inteligência, devolvemos a dignidade ao que o tempo tentou apagar. Não é apenas uma restauração. É um ato de presença. O que resistiu, agora <span className="text-white font-bold not-italic">RE-Existe</span>."</p>
+          <p>
+            "O tempo é um erosivo implacável. Ele desbota cores, rasga bordas e silencia olhares.
+            Mas algumas imagens se recusam a partir. Elas não apenas sobreviveram; elas{' '}
+            <span className="text-white font-bold not-italic">resistiram</span>."
+          </p>
+          <p>
+            "Através da inteligência, devolvemos a dignidade ao que o tempo tentou apagar. Não é
+            apenas uma restauração. É um ato de presença. O que resistiu, agora{' '}
+            <span className="text-white font-bold not-italic">RE-Existe</span>."
+          </p>
         </motion.div>
 
         <motion.button

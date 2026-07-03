@@ -18,9 +18,15 @@ export function BeforeAfterSlider({ before, after }: Props) {
   }, []);
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => { if (dragging.current) updatePosition(e.clientX); };
-    const onTouch = (e: TouchEvent) => { if (dragging.current) updatePosition(e.touches[0].clientX); };
-    const onUp = () => { dragging.current = false; };
+    const onMove = (e: MouseEvent) => {
+      if (dragging.current) updatePosition(e.clientX);
+    };
+    const onTouch = (e: TouchEvent) => {
+      if (dragging.current) updatePosition(e.touches[0].clientX);
+    };
+    const onUp = () => {
+      dragging.current = false;
+    };
 
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseup', onUp);
@@ -64,7 +70,13 @@ export function BeforeAfterSlider({ before, after }: Props) {
       >
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
           <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
-            <path d="M1 5h12M4 2L1 5l3 3M10 2l3 3-3 3" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path
+              d="M1 5h12M4 2L1 5l3 3M10 2l3 3-3 3"
+              stroke="#555"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </div>
       </div>
